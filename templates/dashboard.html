@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="glass-card">
+    <h2>💼 Add Expense</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <label>Category</label>
+        {{ form.category(class="input") }}
+        <label>Amount</label>
+        {{ form.amount(class="input") }}
+        <label>Date</label>
+        {{ form.date(class="input") }}
+        {{ form.submit(class="btn") }}
+    </form>
+</div>
+
+<div class="glass-card">
+    <h2>📋 Your Expenses</h2>
+    <table>
+        <tr><th>Category</th><th>Amount</th><th>Date</th><th>Action</th></tr>
+        {% for exp in expenses %}
+        <tr>
+            <td>{{ exp.category }}</td>
+            <td>₹{{ "%.2f"|format(exp.amount) }}</td>
+            <td>{{ exp.date.strftime("%d-%m-%Y") }}</td>
+            <td><a class="btn-delete" href="{{ url_for('delete_expense', id=exp.id) }}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

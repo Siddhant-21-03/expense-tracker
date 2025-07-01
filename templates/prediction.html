@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Prediction{% endblock %}
+{% block content %}
+<div class="glass-card">
+    <h2>🔮 Next Month's Budget Prediction</h2>
+    <p>
+        {% if prediction %}
+            Estimated spend for next month: <strong>₹{{ prediction }}</strong>
+        {% else %}
+            Not enough data to make a prediction.
+        {% endif %}
+    </p>
+</div>
+{% endblock %}

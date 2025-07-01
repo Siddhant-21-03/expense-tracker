@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}Expense Analysis{% endblock %}
+
+{% block content %}
+<div class="glass-card">
+    <h2 style="margin-bottom: 20px;">📊 Expense Analysis</h2>
+
+    <!-- CSV Upload Form -->
+    <form action="{{ url_for('import_csv') }}" method="POST" enctype="multipart/form-data" style="margin-bottom: 30px;">
+        <input type="file" name="file" accept=".csv" required>
+        <button type="submit" class="btn">📁 Upload CSV</button>
+    </form>
+
+    <!-- Chart Toggle Buttons -->
+    <div style="margin-bottom: 30px;">
+        <form method="GET" action="{{ url_for('analysis') }}" style="display:inline;">
+            <input type="hidden" name="chart" value="bar">
+            <button type="submit" class="btn {% if chart_type == 'bar' %}active{% endif %}">📊 Bar Chart</button>
+        </form>
+        <form method="GET" action="{{ url_for('analysis') }}" style="display:inline;">
+            <input type="hidden" name="chart" value="pie">
+            <button type="submit" class="btn {% if chart_type == 'pie' %}active{% endif %}">🥧 Pie Chart</button>
+        </form>
+        <form method="GET" action="{{ url_for('analysis') }}" style="display:inline;">
+            <input type="hidden" name="chart" value="trend">
+            <button type="submit" class="btn {% if chart_type == 'trend' %}active{% endif %}">📈 Monthly Trend</button>
+        </form>
+    </div>
+
+    <!-- Summary Table -->
+    <div style="overflow-x:auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Total Spent (₹)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for category, total in summary.items() %}
+                <tr>
+                    <td>{{ category }}</td>
+                    <td>{{ total }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Additional Insights -->
+    <div style="margin-top: 40px;">
+        <h3>📌 Summary Insights</h3>
+        <ul style="list-style-type: disc; padding-left: 20px;">
+            <li><strong>Total Spent:</strong> ₹{{ insights.total_spent }}</li>
+            <li><strong>Day with Max Spending:</strong> {{ insights.max_spent_day }} (₹{{ insights.max_spent_amount }})</li>
+            <li><strong>Category-wise Spending:</strong>
+                <ul style="padding-left: 20px;">
+                    {% for cat, amt in insights.category_totals.items() %}
+                        <li>{{ cat }}: ₹{{ amt }}</li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Chart Display -->
+    <div style="margin-top: 50px; text-align: center;">
+        <img src="{{ url_for('static', filename='expense_chart.png') }}" alt="Expense Chart"
+             style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
+    </div>
+</div>
+
+<style>
+    .btn {
+        padding: 10px 18px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #e0e0e0;
+        color: #333;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #c5c5c5;
+    }
+
+    .btn.active {
+        background-color: #4CAF50;
+        color: white;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td {
+        border: 1px solid #ccc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f9f9f9;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f3f3f3;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,145 @@
+/* 🌈 Background Gradient */
+body.gradient-bg {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 100%);
+    min-height: 100vh;
+}
+
+/* 🔮 Glass Card Design */
+.glass-card {
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 600px;
+    color: #333;
+}
+
+/* ✍️ Forms */
+form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+}
+.input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* ✅ Button Styling */
+.btn, .btn-delete {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 18px;
+    background-color: #4a90e2;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+.btn:hover, .btn-delete:hover {
+    background-color: #357ABD;
+}
+
+/* 📊 Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+table, th, td {
+    border: 1px solid #ccc;
+}
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+th {
+    background-color: #f0f8ff;
+}
+
+/* ⚠️ Flash Messages */
+.flash {
+    background-color: #ffeeba;
+    color: #856404;
+    padding: 10px;
+    border: 1px solid #ffeeba;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* 🧭 Navbar */
+.navbar {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #333;
+}
+.nav-links a:hover {
+    color: #007bff;
+}
+
+/* 📱 Responsive */
+@media screen and (max-width: 600px) {
+    .glass-card {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    .nav-links a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    table, th, td {
+        font-size: 14px;
+    }
+}
+.glass-card img {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    height: auto;
+}
+.chart-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 5px;
+    background-color: #ffffff44;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.chart-btn:hover {
+    background-color: #ffffff88;
+}
+
+.chart-btn.active {
+    background-color: #00b894;
+    color: white;
+}
