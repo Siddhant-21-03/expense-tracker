@@ -1,15 +1,23 @@
 {% extends "base.html" %}
-{% block title %}Login{% endblock %}
+{% block title %}Login - Expense Tracker{% endblock %}
+
 {% block content %}
-<div class="glass-card">
+<div class="main-content">
+  <div class="glass-card">
     <h2>🔐 Login</h2>
     <form method="POST">
-        {{ form.hidden_tag() }}
-        <label>Username</label>
-        {{ form.username(class="input") }}
-        <label>Password</label>
-        {{ form.password(class="input") }}
-        {{ form.submit(class="btn") }}
+      {{ form.hidden_tag() }}
+
+      <label for="email">Email</label>
+      {{ form.email(class_="input") }}
+
+      <label for="password">Password</label>
+      {{ form.password(class_="input") }}
+
+      {{ form.submit(class_="btn") }}
     </form>
+
+    <p style="margin-top: 15px;">Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+  </div>
 </div>
 {% endblock %}

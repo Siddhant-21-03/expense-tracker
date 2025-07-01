@@ -1,34 +1,34 @@
-<!DOCTYPE html>
+""<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Expense Tracker{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💰 Expense Tracker</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="gradient-bg">
-    <nav class="navbar">
-        <div class="nav-brand">💸 Expense Tracker</div>
-        <div class="nav-links">
-            {% if session.get('user_id') %}
-                <a href="{{ url_for('dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('analysis') }}">Analysis</a>
-                <a href="{{ url_for('predict') }}">Predict</a>
-                <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('register') }}">Register</a>
-            {% endif %}
+    <nav class="glass-navbar">
+        <div class="nav-left">
+            <span class="nav-logo">💰 Expense Tracker</span>
+        </div>
+        <div class="nav-right">
+            <a href="{{ url_for('home') }}" class="nav-link">Home</a>
+            <a href="{{ url_for('analysis') }}" class="nav-link">Analysis</a>
+            <a href="{{ url_for('predictions') }}" class="nav-link">Predictions</a>
+            <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
         </div>
     </nav>
-    <div class="container">
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            {% for msg in messages %}
-              <div class="flash">{{ msg }}</div>
-            {% endfor %}
-          {% endif %}
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
         {% endwith %}
+
         {% block content %}{% endblock %}
-    </div>
+    </main>
 </body>
 </html>

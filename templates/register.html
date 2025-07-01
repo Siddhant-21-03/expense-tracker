@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 {% block title %}Register{% endblock %}
+
 {% block content %}
-<div class="glass-card">
-    <h2>📝 Register</h2>
-    <form method="POST">
-        {{ form.hidden_tag() }}
-        <label>Username</label>
-        {{ form.username(class="input") }}
-        <label>Password</label>
-        {{ form.password(class="input") }}
-        {{ form.submit(class="btn") }}
-    </form>
+<div class="main-content">
+    <div class="glass-card">
+        <h2>📝 Register</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            
+            <label for="username">Username</label>
+            {{ form.username(class="input", placeholder="Enter your username") }}
+
+            <label for="email">Email</label>
+            {{ form.email(class="input", placeholder="Enter your email") }}
+
+            <label for="password">Password</label>
+            {{ form.password(class="input", placeholder="Enter your password") }}
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+        <p style="margin-top: 10px;">Already have an account? <a href="{{ url_for('login') }}">Login</a></p>
+    </div>
 </div>
 {% endblock %}

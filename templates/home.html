@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="glass-box">
+        <h2>🧾 Add New Expense</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label>Amount</label>
+            {{ form.amount(class="form-input", placeholder="Enter amount") }}
+
+            <label>Category</label>
+            {{ form.category(class="form-input") }}
+
+            <label>Date</label>
+            {{ form.date(class="form-input", placeholder="dd-mm-yyyy") }}
+
+            <label>Note</label>
+            {{ form.note(class="form-input", placeholder="Enter note (optional)") }}
+
+            {{ form.submit(class="form-button") }}
+        </form>
+    </div>
+</div>
+{% endblock %}

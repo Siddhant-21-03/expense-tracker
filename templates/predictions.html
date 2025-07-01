@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="glass-box">
+        <h2>🔮 Budget Prediction</h2>
+        <p>Based on your recent expenses, your predicted budget for next month is:</p>
+        <h1>₹ {{ prediction }}</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <button class="form-button" type="submit">Upload CSV</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

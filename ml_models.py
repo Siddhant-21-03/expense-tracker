@@ -1,37 +1,38 @@
+from models import Expense
 from datetime import datetime
-from collections import defaultdict
 import pandas as pd
 from sklearn.linear_model import LinearRegression
+import numpy as np
 
-def predict_next_month(expenses):
+def predict_budget(user_id):
+    # Load user's expenses from database
+    expenses = Expense.query.filter_by(user_id=user_id).all()
+
     if not expenses:
-        return None  # No data, return None for template to handle
+        return "No data available to make a prediction."
 
-    # Step 1: Aggregate expenses by month
-    monthly_totals = defaultdict(float)
-    for exp in expenses:
-        try:
-            # Ensure date is in datetime format
-            exp_date = exp.date if isinstance(exp.date, datetime) else datetime.strptime(str(exp.date), '%Y-%m-%d')
-            month_str = exp_date.strftime('%Y-%m')
-            monthly_totals[month_str] += exp.amount
-        except Exception as e:
-            print(f"Skipping invalid expense entry: {e}")
-            continue
+    # Prepare data
+    df = pd.DataFrame([{
+        'date': exp.date,
+        'amount': exp.amount
+    } for exp in expenses])
 
-    # Step 2: Prepare DataFrame for model training
-    df = pd.DataFrame(list(monthly_totals.items()), columns=['month', 'total'])
-    df = df.sort_values('month')
-    df['month_num'] = range(1, len(df) + 1)
+    df['date'] = pd.to_datetime(df['date'])  # ⬅️ convert to datetime first
+    df['month'] = df['date'].dt.to_period('M').astype(str)
 
-    # Step 3: Check if there's enough data
-    if len(df) < 2:
-        return None  # Need at least 2 months of data for regression
+    monthly_totals = df.groupby('month')['amount'].sum().reset_index()
+    monthly_totals['month'] = pd.to_datetime(monthly_totals['month'])
 
-    # Step 4: Train model and predict
-    model = LinearRegression()
-    model.fit(df[['month_num']], df['total'])
+    # Add numeric month index for regression
+    monthly_totals['month_num'] = np.arange(len(monthly_totals))
 
-    next_month = [[df['month_num'].iloc[-1] + 1]]
-    predicted_value = model.predict(next_month)[0]
-    return round(predicted_value, 2)
+    # Train simple model
+    X = monthly_totals[['month_num']]
+    y = monthly_totals['amount']
+    model = LinearRegression().fit(X, y)
+
+    # Predict for next month
+    next_month_num = [[monthly_totals['month_num'].max() + 1]]
+    prediction = model.predict(next_month_num)[0]
+
+    return round(prediction, 2)

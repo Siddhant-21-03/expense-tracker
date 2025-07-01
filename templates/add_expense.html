@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Expense</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #c3ecf7, #a0b8ff);
+        }
+
+        .form-container {
+            max-width: 500px;
+            margin: 60px auto;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(12px);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-top: 15px;
+            font-weight: 500;
+        }
+
+        input, select {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>➕ Add New Expense</h2>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+
+            <label for="category">Category</label>
+            {{ form.category }}
+
+            <label for="amount">Amount (₹)</label>
+            {{ form.amount }}
+
+            <label for="date">Date</label>
+            {{ form.date }}
+
+            <button type="submit">Add Expense</button>
+        </form>
+        <a class="back-link" href="{{ url_for('dashboard') }}">← Back to Dashboard</a>
+    </div>
+</body>
+</html>
